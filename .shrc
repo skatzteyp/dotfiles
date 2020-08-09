@@ -1,0 +1,21 @@
+#!/bin/sh
+
+export EDITOR="vim"
+export TERM=screen-256color;
+
+# terminal colors
+if [ -f ~/.promptline.sh ]
+then
+	source ~/.promptline.sh
+fi
+
+alias ll='ls -alF'
+alias la='ls -A'
+alias l='ls -CF'
+alias v=nvim
+alias vi=nvim
+
+# PATHS
+
+# nodebrew
+export PATH=$HOME/.nodebrew/current/bin:$PATH
