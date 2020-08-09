@@ -19,3 +19,6 @@ alias vi=nvim
 
 # nodebrew
 export PATH=$HOME/.nodebrew/current/bin:$PATH
+
+# flutter
+export PATH=$HOME/flutter/bin:$PATH
