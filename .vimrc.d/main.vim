@@ -14,6 +14,8 @@ set showmatch
 set noshowmode
 set number
 set relativenumber
+set noswapfile
+set mouse=a
 
 " show white spaces
 set list listchars=tab:\›\ ,trail:-,extends:>,precedes:<,eol:¬
