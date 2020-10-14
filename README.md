@@ -11,7 +11,7 @@ Why? The old one was forked from mxaddict/dotfiles and I wanted to have my own.
 - Install homebrew. `$ /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install.sh)”`
 - Install neovim, tmux, reattach-to-user-namespace. `$ brew install neovim tmux reattach-to-user-namespace`
 - Install [Powerline fonts](http://github.com/powerline/fonts).
-- Run `$ sh <(curl -sL https://raw.githubusercontent.com/skatzteyp/dotfiles/master/install)`
+- Run `$ sh <(curl -sL https://raw.githubusercontent.com/skatzteyp/dotfiles/master/install.sh)`
 
 Note: Only tested using Mac 10.15.6.
 
