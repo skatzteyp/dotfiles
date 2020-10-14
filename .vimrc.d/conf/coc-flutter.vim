@@ -5,5 +5,5 @@ nmap <silent> <leader>fr  :CocCommand flutter.dev.hotReload<CR>
 nmap <silent> <leader>fR  :CocCommand flutter.dev.hotRestart<CR>
 nmap <silent> <leader>fi  :CocCommand flutter.dev.showWidgetInspectorOverride<CR>
 nmap <silent> <leader>fq  :CocCommand flutter.dev.quit<CR>
-nmap <silent> <leader>fq  :CocCommand flutter.dev.debugPaintSizeEnabled<CR>
+nmap <silent> <leader>fp  :CocCommand flutter.dev.debugPaintSizeEnabled<CR>
 

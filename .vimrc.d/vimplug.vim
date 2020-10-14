@@ -8,6 +8,8 @@ Plug 'junegunn/fzf.vim'
 Plug 'editorconfig/editorconfig-vim'
 Plug 'terryma/vim-multiple-cursors'
 Plug 'airblade/vim-gitgutter'
+Plug 'neoclide/coc.nvim', { 'branch': 'release' }
+Plug 'prettier/vim-prettier', { 'do': 'yarn install' }
 
 " colors/themes
 Plug 'skatzteyp/onedark.vim'
@@ -15,8 +17,7 @@ Plug 'itchyny/lightline.vim'
 Plug 'edkolev/tmuxline.vim'
 Plug 'edkolev/promptline.vim'
 
-" syntax
-Plug 'neoclide/coc.nvim', { 'branch': 'release' }
+" syntax highlighters
 
 " js
 Plug 'yuezk/vim-js'
@@ -24,5 +25,14 @@ Plug 'maxmellon/vim-jsx-pretty'
 
 " dart/flutter
 Plug 'dart-lang/dart-vim-plugin'
+
+" vue
+Plug 'posva/vim-vue'
+
+" jsx/typescript
+Plug 'peitalin/vim-jsx-typescript'
+
+" php
+Plug 'StanAngeloff/php.vim'
 
 call plug#end()

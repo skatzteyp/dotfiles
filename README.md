@@ -20,8 +20,7 @@ Note: Only tested using Mac 10.15.6.
 - Add this to your coc config (:CocConfig) for autosave.
 ```
 {
-    "coc.preferences.formatOnSaveFiletypes": [
-        "dart"
-    ]
+  "coc.preferences.jumpCommand": "tab drop",
+  "coc.preferences.formatOnSaveFiletypes": ["dart"]
 }
 ```
