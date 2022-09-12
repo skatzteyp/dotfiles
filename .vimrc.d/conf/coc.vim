@@ -2,6 +2,8 @@
 let g:coc_global_extensions = [
     \    'coc-flutter',
     \    'coc-tsserver',
+    \    'coc-css',
+    \    'coc-html',
     \ ]
 
 " TextEdit might fail if hidden is not set.

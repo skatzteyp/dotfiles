@@ -35,4 +35,10 @@ Plug 'peitalin/vim-jsx-typescript'
 " php
 Plug 'StanAngeloff/php.vim'
 
+" scss
+Plug 'cakebaker/scss-syntax.vim'
+
+" liquid
+Plug 'tpope/vim-liquid'
+
 call plug#end()

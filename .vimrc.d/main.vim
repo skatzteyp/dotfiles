@@ -27,8 +27,8 @@ no <C-h> <C-W>h
 no <C-l> <C-W>l
 
 " shift tab and tab shortcut
-vnoremap <S-Tab> <gv
-vnoremap <Tab> >gv
+vmap <S-Tab> <gv
+vmap <Tab> >gv
 
 " show existing tab with 2 spaces width
 set tabstop=2
