@@ -41,4 +41,7 @@ Plug 'cakebaker/scss-syntax.vim'
 " liquid
 Plug 'tpope/vim-liquid'
 
+" transparent bg
+Plug 'xiyaowong/nvim-transparent'
+
 call plug#end()

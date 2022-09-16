@@ -40,3 +40,5 @@ set expandtab
 set clipboard=unnamed
 " Remove other chars on backspace
 set backspace=indent,eol,start
+
+let g:transparent_enabled = v:true
