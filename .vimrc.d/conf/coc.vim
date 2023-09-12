@@ -4,6 +4,7 @@ let g:coc_global_extensions = [
     \    'coc-tsserver',
     \    'coc-css',
     \    'coc-html',
+    \    'coc-styled-components',
     \ ]
 
 " TextEdit might fail if hidden is not set.
