@@ -1,0 +1,40 @@
+[general]
+import = [
+    "~/.config/alacritty/themes/themes/one_dark.toml"
+]
+
+[font]
+size = 12.5
+
+[font.normal]
+family = "DejaVu Sans Mono for Powerline"
+style = "Book"
+
+[font.bold]
+family = "DejaVu Sans Mono for Powerline"
+style = "Bold"
+
+[font.italic]
+family = "DejaVu Sans Mono for Powerline"
+style = "Oblique"
+
+[font.bold_italic]
+family = "DejaVu Sans Mono for Powerline"
+style = "Bold Oblique"
+
+[window]
+opacity = 0.8
+startup_mode = "SimpleFullscreen"
+decorations = "Buttonless"
+dynamic_title = true
+
+[window.padding]
+y = 10
+
+[colors.primary]
+background = "#000000"  # ← black
+foreground = "#e3e5e8"  # ← white
+
+[terminal.shell]
+program = "/bin/zsh"
+args = ["-l", "-c", "tmux attach || tmux"]
