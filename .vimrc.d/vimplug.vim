@@ -1,51 +1,70 @@
 call plug#begin('~/.vim/plugged')
 
-" IDE plugins
-Plug 'preservim/nerdtree', { 'on': 'NERDTreeToggle' }
-Plug 'preservim/nerdcommenter'
-Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
-Plug 'junegunn/fzf.vim'
+" 📦 Plugin Manager & Tools
 Plug 'editorconfig/editorconfig-vim'
 Plug 'terryma/vim-multiple-cursors'
-Plug 'airblade/vim-gitgutter'
-Plug 'neoclide/coc.nvim', { 'branch': 'release' }
-Plug 'prettier/vim-prettier', { 'do': 'yarn install' }
-Plug 'eslint/eslint'
 
-" colors/themes
-Plug 'skatzteyp/onedark.vim'
-Plug 'itchyny/lightline.vim'
-Plug 'edkolev/tmuxline.vim'
-Plug 'edkolev/promptline.vim'
+" 🧠 IDE Features
+Plug 'neoclide/coc.nvim', { 'branch': 'release' }     " LSP, IntelliSense
+Plug 'prettier/vim-prettier', { 'do': 'yarn install' } " Optional if using coc-prettier
+Plug 'airblade/vim-gitgutter'                          " Git diff in gutter
 
-" syntax highlighters
+" 🧹 Formatting & Comments
+Plug 'tpope/vim-surround'           " e.g. cs"' to change " to '
+Plug 'tpope/vim-commentary'         " gcc to comment lines (simpler than nerdcommenter)
 
-" js
-Plug 'yuezk/vim-js'
-Plug 'maxmellon/vim-jsx-pretty'
+" 🔍 Fuzzy Finder
+Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
+Plug 'junegunn/fzf.vim'
 
-" dart/flutter
-Plug 'dart-lang/dart-vim-plugin'
+" 📁 File Explorer
+Plug 'preservim/nerdtree', { 'on': 'NERDTreeToggle' }
+Plug 'ryanoasis/vim-devicons'      " NerdTree icons (requires patched font)
 
-" vue
-Plug 'posva/vim-vue'
+" 🗃️ Productivity
+Plug 'ThePrimeagen/harpoon'        " Quick file jumping
+Plug 'wellle/targets.vim'          " Better motions and text objects
 
-" jsx/typescript/styled components
-Plug 'pangloss/vim-javascript'
+" 🧪 Test Runner
+Plug 'vim-test/vim-test'
+Plug 'tpope/vim-dispatch'          " Optional async test runner
+
+" 💅 UI / Themes
+Plug 'itchyny/lightline.vim'       " Lightweight statusline
+Plug 'xiyaowong/nvim-transparent'  " Transparent background
+Plug 'skatzteyp/onedark.vim'       " Theme
+Plug 'edkolev/tmuxline.vim'        " Tmux status line
+Plug 'edkolev/promptline.vim'      " Shell prompt generator
+
+" 🌈 Syntax & Language Support
+
+" JS/TS/React
 Plug 'leafgarland/typescript-vim'
 Plug 'peitalin/vim-jsx-typescript'
+
+" Optional (pick one for JSX highlighting, not both)
+" Plug 'maxmellon/vim-jsx-pretty'
+
+" CSS / Styled Components / Tailwind
 Plug 'styled-components/vim-styled-components', { 'branch': 'main' }
-
-" php
-Plug 'StanAngeloff/php.vim'
-
-" scss
 Plug 'cakebaker/scss-syntax.vim'
 
-" liquid
+" Tailwind classes highlighting (optional)
+Plug 'princejoogie/tailwind-highlight.nvim', { 'do': ':TailwindHighlight' }
+
+" PHP / WordPress
+Plug 'StanAngeloff/php.vim'
+
+" Vue (if needed)
+Plug 'posva/vim-vue'
+
+" Dart / Flutter (optional)
+Plug 'dart-lang/dart-vim-plugin'
+
+" Liquid (Shopify)
 Plug 'tpope/vim-liquid'
 
-" transparent bg
-Plug 'xiyaowong/nvim-transparent'
+" AI Coding Assistant
+Plug 'github/copilot.vim'
 
 call plug#end()

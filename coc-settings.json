@@ -1,0 +1,63 @@
+{
+  "eslint.enable": true,
+  "eslint.autoFixOnSave": true,
+  "eslint.filetypes": [
+    "javascript",
+    "javascriptreact",
+    "typescript",
+    "typescriptreact"
+  ],
+  "eslint.options": {
+    "extensions": [".js", ".jsx", ".ts", ".tsx"]
+  },
+
+  "prettier.enable": true,
+  "prettier.requireConfig": false,
+  "prettier.disableLanguages": ["vue"],
+
+  "tsserver.enable": true,
+  "typescript.preferences.importModuleSpecifier": "non-relative",
+  "typescript.tsdk": "./node_modules/typescript/lib",
+
+  "tailwindCSS.includeLanguages": {
+    "typescript": "javascript",
+    "typescriptreact": "javascript",
+    "javascriptreact": "javascript"
+  },
+  "tailwindCSS.experimental.classRegex": [
+    "tw`([^`]*)",
+    "tw=\"([^\"]*)",
+    "tw={\"([^\"}]*)",
+    "tw\\.\\w+`([^`]*)",
+    "classnames\\(([^)]*)\\)",
+    "clsx\\(([^)]*)\\)"
+  ],
+
+  "css.validate": true,
+  "css.lint.unknownAtRules": "ignore",
+
+  "emmet.includeLanguages": {
+    "javascript": "javascriptreact",
+    "typescript": "typescriptreact",
+    "javascriptreact": "html",
+    "typescriptreact": "html"
+  },
+
+  "suggest.noselect": false,
+  "suggest.enablePreselect": true,
+  "diagnostic.displayByAle": false,
+  "coc.preferences.formatOnSaveFiletypes": [
+    "javascript",
+    "javascriptreact",
+    "typescript",
+    "typescriptreact",
+    "json",
+    "css",
+    "scss",
+    "html"
+  ],
+  "coc.preferences.jumpCommand": "tab drop",
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": true
+  }
+}
