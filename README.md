@@ -8,7 +8,7 @@ My configurations and plugins for vim.
 - Install homebrew. `$ /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/mac/install.sh)”`
 - Install neovim, tmux, reattach-to-user-namespace. `$ brew install neovim tmux reattach-to-user-namespace`
 - Install any [Nerd Font](https://www.nerdfonts.com/font-downloads).
-- Run `$ sh <(curl -sL https://raw.githubusercontent.com/skatzteyp/dotfiles/mac/install.sh)`
+- Run `$ sh <(curl -sL https://raw.githubusercontent.com/skatzteyp/dotfiles/main/install.sh)`
 
 ## Additional Notes
 
