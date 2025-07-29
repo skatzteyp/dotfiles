@@ -15,3 +15,4 @@ My configurations and plugins for vim.
 - Copy the `coc-settings.json` file to `~/.config/nvim/`:
 - Install [Alacritty Theme](https://github.com/alacritty/alacritty-theme)
 - Copy the `alacritty.yml` file to `~/.config/alacritty/`.
+- Rune `:CocInstall coc-tsserver coc-eslint coc-prettier coc-css coc-html coc-json coc-tailwindcss` to install the necessary CoC extensions.
