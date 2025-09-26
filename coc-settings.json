@@ -59,5 +59,7 @@
   "coc.preferences.jumpCommand": "tab drop",
   "editor.codeActionsOnSave": {
     "source.fixAll.eslint": true
-  }
+  },
+  "tsserver.tsdk": ".yarn/sdks/typescript/lib",
+  "eslint.nodePath": ".yarn/sdks"
 }
