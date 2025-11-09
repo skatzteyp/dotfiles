@@ -58,7 +58,11 @@ vim.g.transparent_enabled = true
 -- === Disable all bells ===
 vim.opt.errorbells = false
 vim.opt.visualbell = false
-vim.opt.t_vb = ""
-if vim.opt.belloff ~= nil then
+
+if vim.fn.exists("&t_vb") == 1 then
+  vim.opt.t_vb = ""
+end
+
+if vim.fn.exists("&belloff") == 1 then
   vim.opt.belloff = "all"
 end
