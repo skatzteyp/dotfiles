@@ -192,10 +192,12 @@ vim.api.nvim_create_user_command("OR", function()
   vim.fn.CocActionAsync("runCommand", "editor.action.organizeImport")
 end, {})
 
--- === Statusline (safe) ===
-local existing = vim.opt.statusline:get()
-vim.opt.statusline =
-  "%{get(g:,'coc_status','')}%{get(b:,'coc_current_function','')}" .. existing
+-- Only patch statusline if Lightline is NOT present
+if vim.g.lightline == nil then
+  local existing = vim.opt.statusline:get()
+  vim.opt.statusline =
+    "%{get(g:,'coc_status','')}%{get(b:,'coc_current_function','')}" .. existing
+end
 
 -- === CoCList mappings ===
 local coclist_opts = { silent = true, nowait = true }
