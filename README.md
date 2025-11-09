@@ -1,4 +1,3 @@
-t
 # 🧰 My Dotfiles
 
 Personal dotfiles for **Alacritty**, **tmux**, **Neovim**, and **zsh** — built for modern web development with **Next.js**, **React**, and **PHP**.  

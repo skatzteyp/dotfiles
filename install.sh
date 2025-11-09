@@ -10,7 +10,7 @@ backup() {
   if [ -e "$target" ] && [ ! -L "$target" ]; then
     ts=$(date +%Y%m%d%H%M%S)
     cp -r "$target" "${target}.bak.${ts}"
-    printf "📦 Backed up %s → %s.bak.%s\n" "$target" "$target" "$ts"
+    printf "Backed up %s -> %s.bak.%s\n" "$target" "$target" "$ts"
   fi
 }
 
@@ -18,8 +18,8 @@ link_file() {
   src="$1"
   dest="$2"
 
+  # If source doesn't exist, skip silently (robust across setups)
   if [ ! -e "$src" ] && [ ! -L "$src" ]; then
-    # Silent skip if source does not exist; keeps script robust across setups
     return
   fi
 
@@ -36,17 +36,16 @@ link_file() {
   fi
 
   ln -s "$src" "$dest"
-  printf "🔗 Linked %s → %s\n" "$dest" "$src"
+  printf "Linked %s -> %s\n" "$dest" "$src"
 }
 
 have_cmd() {
   command -v "$1" >/dev/null 2>&1
 }
 
-# Pick an editor command for headless tasks
 headless_vim() {
   if have_cmd nvim; then
-    nvim "$@"
+    nvim --headless "$@"
   elif have_cmd vim; then
     vim "$@"
   else
@@ -79,25 +78,22 @@ else
 fi
 
 # ============================================
-#  Detect platform & ensure dependencies
+#  Platform: macOS bootstrap (Homebrew, etc.)
 # ============================================
 
 OS="$(uname -s || echo "")"
 
 if [ "$OS" = "Darwin" ]; then
-  # ---- Homebrew ----
   if ! have_cmd brew; then
-    printf "🍺 Installing Homebrew...\n"
-/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+    echo "Installing Homebrew..."
+    /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
   fi
 
-  # ---- Core packages ----
-  printf "📦 Ensuring core packages (neovim, tmux, reattach-to-user-namespace, git, curl)...\n"
+  echo "Ensuring core packages (neovim, tmux, reattach-to-user-namespace, git, curl)..."
   brew install neovim tmux reattach-to-user-namespace git curl >/dev/null 2>&1 || true
-
 else
-  printf "ℹ️ Non-macOS detected (%s). Skipping Homebrew auto-install.\n" "$OS"
-  printf "   Please ensure neovim/vim, tmux, git, and curl are installed.\n"
+  echo "Non-macOS detected ($OS). Skipping Homebrew auto-install."
+  echo "Please ensure neovim/vim, tmux, git, and curl are installed."
 fi
 
 # ============================================
@@ -108,6 +104,7 @@ DOTFILES_DIR="$HOME/Projects/dotfiles"
 XDG_CONFIG_HOME="${XDG_CONFIG_HOME:-$HOME/.config}"
 NVIM_CONFIG_DIR="$XDG_CONFIG_HOME/nvim"
 ALACRITTY_CONFIG_DIR="$XDG_CONFIG_HOME/alacritty"
+ALACRITTY_THEMES_DIR="$ALACRITTY_CONFIG_DIR/themes"
 
 mkdir -p "$XDG_CONFIG_HOME"
 
@@ -126,26 +123,26 @@ fi
 cd "$DOTFILES_DIR"
 
 # ============================================
-#  Vim / Neovim bootstrap
+#  vim-plug (for Vim/Neovim)
 # ============================================
 
-# Install vim-plug for Vim (Neovim will also use it via init.vim)
 if [ ! -f "$HOME/.vim/autoload/plug.vim" ]; then
-  printf "📥 Installing vim-plug...\n"
+  echo "Installing vim-plug..."
   curl -fLo "$HOME/.vim/autoload/plug.vim" --create-dirs \
-    "https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim"
+    https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
 fi
 
-# Symlink vim / nvim configs
-link_file "$DOTFILES_DIR/.vimrc" "$HOME/.vimrc"
-link_file "$DOTFILES_DIR/.vimrc.d" "$HOME/.vimrc.d"
-
-# Ensure ~/.vim exists (vim-plug curl usually created it)
+# Ensure ~/.vim exists
 mkdir -p "$HOME/.vim"
 
-# Neovim uses Vim config via symlinks
-link_file "$HOME/.vim" "$NVIM_CONFIG_DIR"
-link_file "$HOME/.vimrc" "$NVIM_CONFIG_DIR/init.vim"
+# ============================================
+#  Symlink Vim / Neovim configs
+# ============================================
+
+link_file "$DOTFILES_DIR/.vimrc"    "$HOME/.vimrc"
+link_file "$DOTFILES_DIR/.vimrc.d"  "$HOME/.vimrc.d"
+link_file "$HOME/.vim"              "$NVIM_CONFIG_DIR"
+link_file "$HOME/.vimrc"            "$NVIM_CONFIG_DIR/init.vim"
 
 # ============================================
 #  Shell + tmux configs
@@ -165,17 +162,52 @@ link_file "$DOTFILES_DIR/.tmux.conf"    "$HOME/.tmux.conf"
 if [ ! -d "$HOME/.zsh/zsh-autosuggestions" ]; then
   mkdir -p "$HOME/.zsh"
   git clone https://github.com/zsh-users/zsh-autosuggestions "$HOME/.zsh/zsh-autosuggestions"
-  printf "✅ Installed zsh-autosuggestions\n"
+  echo "Installed zsh-autosuggestions."
 fi
 
 # ============================================
-#  Alacritty
+#  Alacritty config + theme
 # ============================================
 
 mkdir -p "$ALACRITTY_CONFIG_DIR"
 
+# Link your Alacritty config (expects alacritty.toml in repo root)
 if [ -f "$DOTFILES_DIR/alacritty.toml" ]; then
   link_file "$DOTFILES_DIR/alacritty.toml" "$ALACRITTY_CONFIG_DIR/alacritty.toml"
+fi
+
+# Install alacritty-theme (for imports in alacritty.toml)
+if [ ! -d "$ALACRITTY_THEMES_DIR/.git" ]; then
+  mkdir -p "$ALACRITTY_THEMES_DIR"
+  # Clone directly into themes dir
+  git clone https://github.com/alacritty/alacritty-theme.git "$ALACRITTY_THEMES_DIR"
+  echo "Installed alacritty-theme into $ALACRITTY_THEMES_DIR."
+fi
+
+# ============================================
+#  Nerd Font: DejaVu Sans Mono
+# ============================================
+
+NERD_FONT_URL="https://github.com/ryanoasis/nerd-fonts/releases/download/v3.4.0/DejaVuSansMono.zip"
+
+if [ "$OS" = "Darwin" ]; then
+  FONT_DIR="$HOME/Library/Fonts"
+else
+  FONT_DIR="$HOME/.local/share/fonts"
+fi
+
+mkdir -p "$FONT_DIR"
+
+if ! ls "$FONT_DIR" | grep -qi "DejaVuSansMono.*Nerd"; then
+  echo "Installing DejaVu Sans Mono Nerd Font..."
+  TMP_FONT_ZIP="$(mktemp)"
+  curl -fLo "$TMP_FONT_ZIP" "$NERD_FONT_URL"
+  unzip -o "$TMP_FONT_ZIP" -d "$FONT_DIR" >/dev/null 2>&1 || true
+  rm -f "$TMP_FONT_ZIP"
+  if have_cmd fc-cache; then
+    fc-cache -f "$FONT_DIR" || true
+  fi
+  echo "DejaVu Sans Mono Nerd Font installed (configure it in your terminal settings)."
 fi
 
 # ============================================
@@ -193,11 +225,12 @@ fi
 
 if [ "${UPDATE_PLUGINS:-Y}" != "n" ]; then
   if have_cmd nvim || have_cmd vim; then
-    printf "🔄 Installing / updating plugins (headless)...\n"
-    headless_vim +PlugUpgrade +PlugClean! +PlugUpdate +qall || \
-      printf "⚠️ Plugin installation failed. You can retry manually inside Vim/Neovim.\n"
+    echo "Installing/updating plugins (headless)..."
+    if ! headless_vim +PlugUpgrade +PlugClean! +PlugUpdate +qall; then
+      echo "Plugin installation failed. You can retry manually with :PlugUpdate."
+    fi
   else
-    printf "⚠️ Neither nvim nor vim found. Skipping plugin installation.\n"
+    echo "No nvim/vim found. Skipping plugin installation."
   fi
 fi
 
@@ -217,6 +250,6 @@ fi
 #  Done
 # ============================================
 
-printf "\n🎉 Dotfiles installation complete.\n"
-printf "➡️  Recommended: use Alacritty as your terminal.\n"
-printf "   It will start tmux automatically and load your Neovim-based setup.\n"
+echo
+echo "Dotfiles installation complete."
+echo "Open Alacritty (with DejaVu Sans Mono Nerd Font) to start tmux + Neovim."
