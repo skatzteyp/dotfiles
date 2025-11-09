@@ -1,26 +1,26 @@
 [general]
 import = [
-    "~/.config/alacritty/themes/themes/one_dark.toml"
+  "~/.config/alacritty/themes/themes/one_dark.toml"
 ]
 
 [font]
 size = 12.5
 
 [font.normal]
-family = "DejaVu Sans Mono for Powerline"
-style = "Book"
+family = "DejaVuSansM Nerd Font"
+style = "Regular"
 
 [font.bold]
-family = "DejaVu Sans Mono for Powerline"
+family = "DejaVuSansM Nerd Font"
 style = "Bold"
 
 [font.italic]
-family = "DejaVu Sans Mono for Powerline"
-style = "Oblique"
+family = "DejaVuSansM Nerd Font"
+style = "Italic"
 
 [font.bold_italic]
-family = "DejaVu Sans Mono for Powerline"
-style = "Bold Oblique"
+family = "DejaVuSansM Nerd Font"
+style = "Bold Italic"
 
 [window]
 opacity = 0.8

@@ -1,4 +1,6 @@
-" === CoC Extensions ===
+" ================================
+" CoC Extensions
+" ================================
 let g:coc_global_extensions = [
       \ 'coc-tsserver',
       \ 'coc-css',
@@ -11,29 +13,35 @@ let g:coc_global_extensions = [
       \ 'coc-emmet',
       \ ]
 
-" === Core settings for CoC ===
+" ================================
+" Core settings for CoC
+" ================================
 set hidden
 set nobackup
 set nowritebackup
 set updatetime=300
 set signcolumn=yes
 
-" === Tab completion ===
+" ================================
+" Tab completion
+" ================================
 function! CheckBackspace() abort
   let col = col('.') - 1
   return !col || getline('.')[col - 1] =~# '\s'
 endfunction
 
-inoremap <silent><expr> <Tab> coc#pum#visible()
+inoremap <silent><expr> <Tab>
+      \ coc#pum#visible()
       \ ? coc#pum#next(1)
       \ : CheckBackspace() ? "\<Tab>" : coc#refresh()
 
-inoremap <silent><expr> <S-Tab> coc#pum#visible()
+inoremap <silent><expr> <S-Tab>
+      \ coc#pum#visible()
       \ ? coc#pum#prev(1)
       \ : "\<C-h>"
 
-" <CR> confirms or falls back
-inoremap <silent><expr> <CR> coc#pum#visible()
+inoremap <silent><expr> <CR>
+      \ coc#pum#visible()
       \ ? coc#pum#confirm()
       \ : "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
 
@@ -44,34 +52,45 @@ else
   inoremap <silent><expr> <C-@> coc#refresh()
 endif
 
-" === Diagnostics ===
+" ================================
+" Diagnostics + Go-to
+" ================================
 nmap <silent> [g <Plug>(coc-diagnostic-prev)
 nmap <silent> ]g <Plug>(coc-diagnostic-next)
 
-" === Go-to ===
 nmap <silent> gd <Plug>(coc-definition)
 nmap <silent> gy <Plug>(coc-type-definition)
 nmap <silent> gi <Plug>(coc-implementation)
 nmap <silent> gr <Plug>(coc-references)
 
-" === Hover ===
-nnoremap <silent> K :call ShowDocumentation()<CR>
-
-function! ShowDocumentation()
-  if CocAction('hasProvider', 'hover')
+" ================================
+" Hover docs (guarded)
+" ================================
+function! ShowDocumentation() abort
+  if exists('*CocAction') && CocAction('hasProvider', 'hover')
     call CocActionAsync('doHover')
   else
-    call feedkeys('K', 'in')
+    " fallback to builtin K
+    execute 'normal! K'
   endif
 endfunction
 
-" Highlight references on CursorHold
+nnoremap <silent> K :call ShowDocumentation()<CR>
+
+" ================================
+" Highlight references on CursorHold (guarded)
+" ================================
 augroup CocHighlight
   autocmd!
-  autocmd CursorHold * silent call CocActionAsync('highlight')
+  autocmd CursorHold *
+        \ if exists('*CocActionAsync') |
+        \   silent call CocActionAsync('highlight') |
+        \ endif
 augroup END
 
-" === Rename / Format / Code actions ===
+" ================================
+" Rename / Format / Code actions
+" ================================
 nmap <leader>rn <Plug>(coc-rename)
 
 xmap <leader>f  <Plug>(coc-format-selected)
@@ -94,35 +113,47 @@ omap ic <Plug>(coc-classobj-i)
 xmap ac <Plug>(coc-classobj-a)
 omap ac <Plug>(coc-classobj-a)
 
-" Float windows scroll
+" ================================
+" Float window scroll (safe)
+" ================================
 if has('nvim-0.4.0') || has('patch-8.2.0750')
   nnoremap <silent><nowait><expr> <C-f> coc#float#has_scroll()
         \ ? coc#float#scroll(1) : "\<C-f>"
   nnoremap <silent><nowait><expr> <C-b> coc#float#has_scroll()
         \ ? coc#float#scroll(0) : "\<C-b>"
+
   inoremap <silent><nowait><expr> <C-f> coc#float#has_scroll()
         \ ? "\<c-r>=coc#float#scroll(1)\<cr>" : "\<Right>"
   inoremap <silent><nowait><expr> <C-b> coc#float#has_scroll()
         \ ? "\<c-r>=coc#float#scroll(0)\<cr>" : "\<Left>"
+
   vnoremap <silent><nowait><expr> <C-f> coc#float#has_scroll()
         \ ? coc#float#scroll(1) : "\<C-f>"
   vnoremap <silent><nowait><expr> <C-b> coc#float#has_scroll()
         \ ? coc#float#scroll(0) : "\<C-b>"
 endif
 
+" ================================
 " Range select
+" ================================
 nmap <silent> <C-s> <Plug>(coc-range-select)
 xmap <silent> <C-s> <Plug>(coc-range-select)
 
-" Commands
-command! -nargs=0 Format :call CocActionAsync('format')
-command! -nargs=0 Fold   :call CocAction('fold', <f-args>)
-command! -nargs=0 OR     :call CocActionAsync('runCommand', 'editor.action.organizeImport')
+" ================================
+" Commands (only error if you call them without CoC)
+" ================================
+command! -nargs=0 Format call CocActionAsync('format')
+command! -nargs=0 Fold   call CocAction('fold', <f-args>)
+command! -nargs=0 OR     call CocActionAsync('runCommand', 'editor.action.organizeImport')
 
-" Statusline integration
-set statusline^=%{coc#status()}%{get(b:, 'coc_current_function', '')}
+" ================================
+" Statusline integration (guarded)
+" ================================
+set statusline^=%{exists('*coc#status') ? coc#status() : ''}%{get(b:, 'coc_current_function', '')}
 
+" ================================
 " CoCList mappings
+" ================================
 nnoremap <silent><nowait> <space>a  :<C-u>CocList diagnostics<CR>
 nnoremap <silent><nowait> <space>e  :<C-u>CocList extensions<CR>
 nnoremap <silent><nowait> <space>c  :<C-u>CocList commands<CR>
