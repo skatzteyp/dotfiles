@@ -20,5 +20,9 @@ if [ -d "$HOME/.nodebrew/current/bin" ]; then
   export PATH="$HOME/.nodebrew/current/bin:$PATH"
 fi
 
+# nvm
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"
+
+# homebrew
+export PATH="/opt/homebrew/opt/mysql-client/bin:$PATH"
