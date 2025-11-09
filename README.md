@@ -11,7 +11,7 @@ Run:
 
 - lua based:
 ```
-sh <(curl -sL https://raw.githubusercontent.com/skatzteyp/dotfiles/main/install.sh)
+sh <(curl -sL https://raw.githubusercontent.com/skatzteyp/dotfiles/main/install-lua.sh)
 ```
 
 - vimscript based:
