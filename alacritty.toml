@@ -38,3 +38,12 @@ foreground = "#e3e5e8"
 [terminal.shell]
 program = "/bin/zsh"
 args = ["-l", "-c", "tmux attach || tmux"]
+
+[keyboard]
+bindings = [
+  { key = "Slash", mods = "Control", chars = "\u001f" }
+]
+
+[bell]
+duration = 0
+command = "None"

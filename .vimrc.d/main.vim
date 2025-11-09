@@ -47,5 +47,10 @@ vnoremap <Tab> >gv
 " === Transparent background (for nvim-transparent) ===
 let g:transparent_enabled = v:true
 
-" === Signcolumn ===
-" Keep signcolumn config in coc.vim to avoid duplication
+" Disable all bells in Vim/Neovim
+set noerrorbells
+set novisualbell
+set t_vb=
+if exists('&belloff')
+  set belloff=all
+endif
