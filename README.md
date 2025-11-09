@@ -1,11 +1,11 @@
-# 🧰 My Dotfiles
+# My Dotfiles
 
 Personal dotfiles for **Alacritty**, **tmux**, **Neovim**, and **zsh** — built for modern web development with **Next.js**, **React**, and **PHP**.  
 Unified **OneDark** theme, **CoC LSP** support, and smooth terminal → tmux → Neovim integration.
 
 ---
 
-## ⚙️ Quick Install
+## Quick Install
 
 Run:
 
@@ -24,7 +24,7 @@ This will:
 
 ---
 
-## 🧩 Highlights
+## Highlights
 
 - Neovim/Vim IDE setup with **CoC** for TS/JS/React/CSS/HTML/JSON/PHP
 - **FZF** fuzzy finder + **NERDTree** file explorer
@@ -36,7 +36,7 @@ This will:
 
 ---
 
-## 💡 Common Mappings
+## Common Mappings
 
 - `<leader>n` — toggle NERDTree
 - `<leader>p` — FZF Git files
@@ -44,5 +44,3 @@ This will:
 - `Ctrl-/` (or `Ctrl-_`) — comment with vim-commentary
 
 ---
-
-Open **Alacritty** → tmux starts → Neovim ready → start coding 🚀
