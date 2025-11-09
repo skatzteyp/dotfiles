@@ -14,4 +14,4 @@ HISTFILESIZE=5000
 shopt -s checkwinsize
 
 # Load our shared SHELLRC file
-source ~/.shrc
+[ -f "$HOME/.shrc" ] && . "$HOME/.shrc"

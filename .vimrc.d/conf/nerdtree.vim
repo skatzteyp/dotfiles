@@ -1,4 +1,3 @@
-let mapleader = '\'
-
-no <leader>n :NERDTreeToggle<CR>
-vno <leader>n :NERDTreeToggle<CR>
+" NERDTree toggle
+" (Leader is defined in main.vim)
+nnoremap <silent> <leader>n :NERDTreeToggle<CR>

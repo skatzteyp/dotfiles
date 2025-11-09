@@ -1,4 +1,5 @@
 {
+  // === ESLint ===
   "eslint.enable": true,
   "eslint.autoFixOnSave": true,
   "eslint.filetypes": [
@@ -11,14 +12,16 @@
     "extensions": [".js", ".jsx", ".ts", ".tsx"]
   },
 
+  // === Prettier (via coc-prettier) ===
   "prettier.enable": true,
   "prettier.requireConfig": false,
   "prettier.disableLanguages": ["vue"],
 
+  // === TypeScript / TS Server ===
   "tsserver.enable": true,
   "typescript.preferences.importModuleSpecifier": "non-relative",
-  "typescript.tsdk": "./node_modules/typescript/lib",
 
+  // === Tailwind CSS (coc-tailwindcss) ===
   "tailwindCSS.includeLanguages": {
     "typescript": "javascript",
     "typescriptreact": "javascript",
@@ -33,9 +36,11 @@
     "clsx\\(([^)]*)\\)"
   ],
 
+  // === CSS ===
   "css.validate": true,
   "css.lint.unknownAtRules": "ignore",
 
+  // === Emmet (coc-emmet) ===
   "emmet.includeLanguages": {
     "javascript": "javascriptreact",
     "typescript": "typescriptreact",
@@ -43,9 +48,11 @@
     "typescriptreact": "html"
   },
 
+  // === Completion behavior ===
   "suggest.noselect": false,
   "suggest.enablePreselect": true,
-  "diagnostic.displayByAle": false,
+
+  // === Format on save ===
   "coc.preferences.formatOnSaveFiletypes": [
     "javascript",
     "javascriptreact",
@@ -56,10 +63,16 @@
     "scss",
     "html"
   ],
-  "coc.preferences.jumpCommand": "tab drop",
+
+  // VSCode-style trigger for ESLint fixAll — coc-eslint respects this
   "editor.codeActionsOnSave": {
     "source.fixAll.eslint": true
   },
+
+  // === Jumps ===
+  "coc.preferences.jumpCommand": "tab drop",
+
+  // === Yarn PnP SDKs ===
   "tsserver.tsdk": ".yarn/sdks/typescript/lib",
   "eslint.nodePath": ".yarn/sdks"
 }

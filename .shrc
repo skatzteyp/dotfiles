@@ -1,24 +1,21 @@
-#!/bin/sh
+# Shared shell config (sourced by bash and zsh)
 
-export EDITOR="vim"
-export TERM=screen-256color;
+# Use Neovim as default editor
+export EDITOR="nvim"
 
-# terminal colors
-if [ -f ~/.promptline.sh ]
-then
-	source ~/.promptline.sh
+# Only load promptline if present and interactive
+if [ -t 1 ] && [ -f "$HOME/.promptline.sh" ]; then
+  # shellcheck disable=SC1090
+  . "$HOME/.promptline.sh"
 fi
 
 alias ll='ls -alF'
 alias la='ls -A'
 alias l='ls -CF'
-alias v=nvim
-alias vi=nvim
-
-# PATHS
+alias v='nvim'
+alias vi='nvim'
 
 # nodebrew
-export PATH=$HOME/.nodebrew/current/bin:$PATH
-
-# flutter
-export PATH=$HOME/flutter/bin:$PATH
+if [ -d "$HOME/.nodebrew/current/bin" ]; then
+  export PATH="$HOME/.nodebrew/current/bin:$PATH"
+fi

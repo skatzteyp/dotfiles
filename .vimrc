@@ -1,7 +1,12 @@
-source ~/.vimrc.d/vimplug.vim
+" Load plugins
+source $HOME/.vimrc.d/vimplug.vim
 
-for vscript in split(glob('~/.vimrc.d/conf/*.vim'), '\n')
-	exe 'source' vscript
+" Load plugin-specific configs
+for vscript in split(glob('$HOME/.vimrc.d/conf/*.vim'), '\n')
+  if filereadable(vscript)
+    execute 'source' vscript
+  endif
 endfor
 
-source ~/.vimrc.d/main.vim
+" Load main editor settings (UI, mappings, etc.)
+source $HOME/.vimrc.d/main.vim

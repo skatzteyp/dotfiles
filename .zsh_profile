@@ -1,1 +1,1 @@
-[[ -s ~/.zshrc ]] && source ~/.zshrc
+[ -s "$HOME/.zshrc" ] && . "$HOME/.zshrc"

@@ -32,8 +32,8 @@ dynamic_title = true
 y = 10
 
 [colors.primary]
-background = "#000000"  # ← black
-foreground = "#e3e5e8"  # ← white
+background = "#000000"
+foreground = "#e3e5e8"
 
 [terminal.shell]
 program = "/bin/zsh"

@@ -1,7 +1,6 @@
-" we need to slow down VIM gitgutter, cause it causes the Editor to lock up
-" while updating the gutter signs...
+" Make gitgutter lighter for large repos
 let g:gitgutter_realtime = 0
 let g:gitgutter_eager = 0
 
-" make gitgutter highlight the lines by default
+" Highlight only signs by default (set to 1 if you want whole line)
 let g:gitgutter_highlight_lines = 0

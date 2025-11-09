@@ -36,6 +36,14 @@ zstyle ':completion:*' verbose true
 zstyle ':completion:*:*:kill:*:processes' list-colors '=(#b) #([0-9]#)*=0=01;31'
 zstyle ':completion:*:kill:*' command 'ps -u $USER -o pid,%cpu,tty,cputime,cmd'
 
-# Load our shared SHELLRC file
-source ~/.zsh/zsh-autosuggestions/zsh-autosuggestions.zsh
-source ~/.shrc
+# zsh-autosuggestions
+if [ -f "$HOME/.zsh/zsh-autosuggestions/zsh-autosuggestions.zsh" ]; then
+  # shellcheck disable=SC1090
+  source "$HOME/.zsh/zsh-autosuggestions/zsh-autosuggestions.zsh"
+fi
+
+# Shared shell config
+if [ -f "$HOME/.shrc" ]; then
+  # shellcheck disable=SC1090
+  . "$HOME/.shrc"
+fi

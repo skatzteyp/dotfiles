@@ -6,12 +6,12 @@ let g:lightline = {
   \ },
   \ }
 
-function! MyFilename() 
+function! MyFilename()
   let fname = expand('%:t')
   return fname =~ 'NERD_tree' ? '' : fname
 endfunction
 
-function! MyMode() 
+function! MyMode()
   let fname = expand('%:t')
   return fname =~ 'NERD_tree' ? 'NERDTree' : lightline#mode()
 endfunction

@@ -1,18 +1,47 @@
-# My Dotfiles
+t
+# 🧰 My Dotfiles
 
-My configurations and plugins for vim.
+Personal dotfiles for **Alacritty**, **tmux**, **Neovim**, and **zsh** — built for modern web development with **Next.js**, **React**, and **PHP**.  
+Unified **OneDark** theme, **CoC LSP** support, and smooth terminal → tmux → Neovim integration.
 
-## Installation
+---
 
-- Install [Alacritty](https://alacritty.org/). 
-- Install homebrew. `$ /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/mac/install.sh)”`
-- Install neovim, tmux, reattach-to-user-namespace. `$ brew install neovim tmux reattach-to-user-namespace`
-- Install any [Nerd Font](https://www.nerdfonts.com/font-downloads).
-- Run `$ sh <(curl -sL https://raw.githubusercontent.com/skatzteyp/dotfiles/main/install.sh)`
+## ⚙️ Quick Install
 
-## Additional Notes
+Run:
 
-- Copy the `coc-settings.json` file to `~/.config/nvim/`:
-- Install [Alacritty Theme](https://github.com/alacritty/alacritty-theme)
-- Copy the `alacritty.yml` file to `~/.config/alacritty/`.
-- Rune `:CocInstall coc-tsserver coc-eslint coc-prettier coc-css coc-html coc-json coc-tailwindcss` to install the necessary CoC extensions.
+sh <(curl -sL https://raw.githubusercontent.com/skatzteyp/dotfiles/main/install.sh)
+
+This will:
+
+- Install **Homebrew**, **Neovim**, **tmux**, and dependencies (on macOS)
+- Clone/update this repo to `~/Projects/dotfiles`
+- Create timestamped backups of existing configs
+- Symlink configs for shell, Neovim/Vim, tmux, and Alacritty
+- Install **vim-plug**, **zsh-autosuggestions**, and all plugins (headless)
+- Generate **promptline** and **tmuxline** configs
+
+---
+
+## 🧩 Highlights
+
+- Neovim/Vim IDE setup with **CoC** for TS/JS/React/CSS/HTML/JSON/PHP
+- **FZF** fuzzy finder + **NERDTree** file explorer
+- **Prettier + ESLint** integration (format on save ready)
+- **OneDark** theme across terminal, tmux, and Neovim
+- Transparent terminal/Neovim support
+- **zsh-autosuggestions** + shared aliases via `.shrc`
+- Safe, re-runnable installer using symlinks
+
+---
+
+## 💡 Common Mappings
+
+- `<leader>n` — toggle NERDTree
+- `<leader>p` — FZF Git files
+- `Ctrl-h/j/k/l` — move between splits
+- `Ctrl-/` (or `Ctrl-_`) — comment with vim-commentary
+
+---
+
+Open **Alacritty** → tmux starts → Neovim ready → start coding 🚀
