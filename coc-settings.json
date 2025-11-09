@@ -74,5 +74,10 @@
 
   // === Yarn PnP SDKs ===
   "tsserver.tsdk": ".yarn/sdks/typescript/lib",
-  "eslint.nodePath": ".yarn/sdks"
+  "eslint.nodePath": ".yarn/sdks",
+
+  // === Prisma (coc-prisma) ===
+  "prisma.enable": true,
+  "prisma.enableSyntaxHighlighting": true,
+  "prisma.schemaFile": "schema.prisma"
 }

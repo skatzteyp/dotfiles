@@ -9,6 +9,7 @@ let g:coc_global_extensions = [
       \ 'coc-prettier',
       \ 'coc-tailwindcss',
       \ 'coc-emmet',
+      \ 'coc-prisma',
       \ ]
 
 " === Core settings for CoC ===

@@ -40,15 +40,14 @@ Plug 'xiyaowong/nvim-transparent' " Neovim transparency
 " JS / TS / React / Next.js
 Plug 'leafgarland/typescript-vim'
 Plug 'peitalin/vim-jsx-typescript'
-" If you prefer, you can try:
-" Plug 'maxmellon/vim-jsx-pretty'
+ Plug 'maxmellon/vim-jsx-pretty'
 
 " CSS / SCSS / styled-components
 Plug 'styled-components/vim-styled-components', { 'branch': 'main' }
 Plug 'cakebaker/scss-syntax.vim'
 
-" Tailwind (optional; configure separately if you use it)
-" Plug 'princejoogie/tailwind-highlight.nvim'
+" Tailwind
+Plug 'princejoogie/tailwind-highlight.nvim'
 
 " PHP / WordPress
 Plug 'StanAngeloff/php.vim'
@@ -56,8 +55,8 @@ Plug 'StanAngeloff/php.vim'
 " Vue (optional)
 Plug 'posva/vim-vue'
 
-" Dart / Flutter (optional)
-Plug 'dart-lang/dart-vim-plugin'
+" Prisma
+Plug 'pantharshit00/vim-prisma'
 
 " Liquid (Shopify)
 Plug 'tpope/vim-liquid'
