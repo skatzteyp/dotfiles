@@ -19,3 +19,6 @@ alias vi='nvim'
 if [ -d "$HOME/.nodebrew/current/bin" ]; then
   export PATH="$HOME/.nodebrew/current/bin:$PATH"
 fi
+
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"
