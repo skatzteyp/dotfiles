@@ -9,7 +9,9 @@ Unified **OneDark** theme, **CoC LSP** support, and smooth terminal → tmux →
 
 Run:
 
+```
 sh <(curl -sL https://raw.githubusercontent.com/skatzteyp/dotfiles/main/install.sh)
+```
 
 This will:
 
