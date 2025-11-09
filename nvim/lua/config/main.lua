@@ -54,15 +54,3 @@ map("v", "<Tab>", ">gv", opts)
 
 -- === Transparent background (for nvim-transparent) ===
 vim.g.transparent_enabled = true
-
--- === Disable all bells ===
-vim.opt.errorbells = false
-vim.opt.visualbell = false
-
-if vim.fn.exists("&t_vb") == 1 then
-  vim.opt.t_vb = ""
-end
-
-if vim.fn.exists("&belloff") == 1 then
-  vim.opt.belloff = "all"
-end
