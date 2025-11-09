@@ -47,7 +47,7 @@ Plug 'styled-components/vim-styled-components', { 'branch': 'main' }
 Plug 'cakebaker/scss-syntax.vim'
 
 " Tailwind
-Plug 'princejoogie/tailwind-highlight.nvim'
+Plug 'princejoogie/tailwind-highlight.nvim', { 'do': ':TailwindHighlight' }
 
 " PHP / WordPress
 Plug 'StanAngeloff/php.vim'
