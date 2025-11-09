@@ -29,7 +29,6 @@ local function check_backspace()
   return line:sub(col, col):match("%s") ~= nil
 end
 
--- Common opts
 local expr_opts = { silent = true, noremap = true, expr = true }
 
 -- === Tab completion ===
@@ -37,7 +36,7 @@ vim.keymap.set("i", "<Tab>", function()
   if vim.fn["coc#pum#visible"]() == 1 then
     return vim.fn
   elseif check_backspace() then
-    return "<Tab>"
+    return "\t"
   else
     vim.fn["coc#refresh"]()
     return ""
@@ -48,7 +47,7 @@ vim.keymap.set("i", "<S-Tab>", function()
   if vim.fn["coc#pum#visible"]() == 1 then
     return vim.fn
   else
-    return "<C-h>"
+    return vim.api.nvim_replace_termcodes("<C-h>", true, false, true)
   end
 end, expr_opts)
 
@@ -56,15 +55,17 @@ vim.keymap.set("i", "<CR>", function()
   if vim.fn["coc#pum#visible"]() == 1 then
     return vim.fn["coc#pum#confirm"]()
   end
-  return vim.fn["coc#on_enter"]()
+  -- fallback to original behavior with coc#on_enter
+  return vim.api.nvim_replace_termcodes(
+    "<C-g>u<CR><C-r>=coc#on_enter()<CR>",
+    true,
+    false,
+    true
+  )
 end, expr_opts)
 
 -- Trigger completion
-if vim.fn.has("nvim") == 1 then
-  vim.keymap.set("i", "<C-Space>", "coc#refresh()", expr_opts)
-else
-  vim.keymap.set("i", "<C-@>", "coc#refresh()", expr_opts)
-end
+vim.keymap.set("i", "<C-Space>", "coc#refresh()", expr_opts)
 
 -- === Diagnostics ===
 vim.keymap.set("n", "[g", "<Plug>(coc-diagnostic-prev)", { silent = true })
@@ -88,9 +89,9 @@ end
 vim.keymap.set("n", "K", show_documentation, { silent = true })
 
 -- === Highlight references on CursorHold ===
-local augroup = vim.api.nvim_create_augroup("CocHighlight", { clear = true })
+local hl_group = vim.api.nvim_create_augroup("CocHighlight", { clear = true })
 vim.api.nvim_create_autocmd("CursorHold", {
-  group = augroup,
+  group = hl_group,
   callback = function()
     if vim.fn.exists("*CocActionAsync") == 1 then
       vim.fn.CocActionAsync("highlight")
@@ -129,7 +130,7 @@ if vim.fn.has("nvim-0.4.0") == 1 or vim.fn.has("patch-8.2.0750") == 1 then
     if vim.fn["coc#float#has_scroll"]() == 1 then
       return vim.fn
     else
-      return "<C-f>"
+      return vim.api.nvim_replace_termcodes("<C-f>", true, false, true)
     end
   end, float_expr)
 
@@ -137,7 +138,23 @@ if vim.fn.has("nvim-0.4.0") == 1 or vim.fn.has("patch-8.2.0750") == 1 then
     if vim.fn["coc#float#has_scroll"]() == 1 then
       return vim.fn
     else
-      return "<C-b>"
+      return vim.api.nvim_replace_termcodes("<C-b>", true, false, true)
+    end
+  end, float_expr)
+
+  vim.keymap.set("x", "<C-f>", function()
+    if vim.fn["coc#float#has_scroll"]() == 1 then
+      return vim.fn
+    else
+      return vim.api.nvim_replace_termcodes("<C-f>", true, false, true)
+    end
+  end, float_expr)
+
+  vim.keymap.set("x", "<C-b>", function()
+    if vim.fn["coc#float#has_scroll"]() == 1 then
+      return vim.fn
+    else
+      return vim.api.nvim_replace_termcodes("<C-b>", true, false, true)
     end
   end, float_expr)
 
@@ -145,7 +162,7 @@ if vim.fn.has("nvim-0.4.0") == 1 or vim.fn.has("patch-8.2.0750") == 1 then
     if vim.fn["coc#float#has_scroll"]() == 1 then
       return vim.api.nvim_replace_termcodes("<C-r>=coc#float#scroll(1)<CR>", true, false, true)
     else
-      return "<Right>"
+      return vim.api.nvim_replace_termcodes("<Right>", true, false, true)
     end
   end, float_expr)
 
@@ -153,23 +170,7 @@ if vim.fn.has("nvim-0.4.0") == 1 or vim.fn.has("patch-8.2.0750") == 1 then
     if vim.fn["coc#float#has_scroll"]() == 1 then
       return vim.api.nvim_replace_termcodes("<C-r>=coc#float#scroll(0)<CR>", true, false, true)
     else
-      return "<Left>"
-    end
-  end, float_expr)
-
-  vim.keymap.set("v", "<C-f>", function()
-    if vim.fn["coc#float#has_scroll"]() == 1 then
-      return vim.fn
-    else
-      return "<C-f>"
-    end
-  end, float_expr)
-
-  vim.keymap.set("v", "<C-b>", function()
-    if vim.fn["coc#float#has_scroll"]() == 1 then
-      return vim.fn
-    else
-      return "<C-b>"
+      return vim.api.nvim_replace_termcodes("<Left>", true, false, true)
     end
   end, float_expr)
 end
@@ -192,8 +193,9 @@ vim.api.nvim_create_user_command("OR", function()
 end, {})
 
 -- === Statusline (safe) ===
-local current = vim.opt.statusline:get()
-vim.opt.statusline = "%{get(g:,'coc_status','')}%{get(b:,'coc_current_function','')}" .. current
+local existing = vim.opt.statusline:get()
+vim.opt.statusline =
+  "%{get(g:,'coc_status','')}%{get(b:,'coc_current_function','')}" .. existing
 
 -- === CoCList mappings ===
 local coclist_opts = { silent = true, nowait = true }
@@ -201,4 +203,7 @@ vim.keymap.set("n", "<space>a", ":<C-u>CocList diagnostics<CR>", coclist_opts)
 vim.keymap.set("n", "<space>e", ":<C-u>CocList extensions<CR>", coclist_opts)
 vim.keymap.set("n", "<space>c", ":<C-u>CocList commands<CR>", coclist_opts)
 vim.keymap.set("n", "<space>o", ":<C-u>CocList outline<CR>", coclist_opts)
-vim.keymap.se
+vim.keymap.set("n", "<space>s", ":<C-u>CocList -I symbols<CR>", coclist_opts)
+vim.keymap.set("n", "<space>j", ":<C-u>CocNext<CR>", coclist_opts)
+vim.keymap.set("n", "<space>k", ":<C-u>CocPrev<CR>", coclist_opts)
+vim.keymap.set("n", "<space>p", ":<C-u>CocListResume<CR>", coclist_opts)
