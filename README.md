@@ -9,6 +9,13 @@ Unified **OneDark** theme, **CoC LSP** support, and smooth terminal → tmux →
 
 Run:
 
+- lua based:
+```
+sh <(curl -sL https://raw.githubusercontent.com/skatzteyp/dotfiles/main/install.sh)
+```
+
+- vimscript based:
+
 ```
 sh <(curl -sL https://raw.githubusercontent.com/skatzteyp/dotfiles/main/install.sh)
 ```
