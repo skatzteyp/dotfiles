@@ -1,7 +1,8 @@
 {
   // === ESLint ===
   "eslint.enable": true,
-  "eslint.autoFixOnSave": true,
+  "eslint.run": "onSave",
+  "eslint.autoFixOnSave": false, // avoid conflicts with Prettier
   "eslint.filetypes": [
     "javascript",
     "javascriptreact",
@@ -12,35 +13,44 @@
     "extensions": [".js", ".jsx", ".ts", ".tsx"]
   },
 
-  // === Prettier (via coc-prettier) ===
+  // === Code Actions on Save ===
+  // Let ESLint fix on save, but avoid double-formatting
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": true
+  },
+
+  // === Prettier ===
+  // Prettier formats; ESLint fixes rules — no double conflict
   "prettier.enable": true,
   "prettier.requireConfig": false,
   "prettier.disableLanguages": ["vue"],
 
-  // === TypeScript / TS Server ===
+  // === TypeScript ===
   "tsserver.enable": true,
   "typescript.preferences.importModuleSpecifier": "non-relative",
+  "tsserver.tsdk": ".yarn/sdks/typescript/lib",
+  "eslint.nodePath": ".yarn/sdks",
 
-  // === Tailwind CSS (coc-tailwindcss) ===
+  // === Tailwind CSS ===
   "tailwindCSS.includeLanguages": {
-    "typescript": "javascript",
-    "typescriptreact": "javascript",
-    "javascriptreact": "javascript"
+    "javascript": "javascriptreact",
+    "javascriptreact": "javascriptreact",
+    "typescript": "typescriptreact",
+    "typescriptreact": "typescriptreact"
   },
-  "tailwindCSS.experimental.classRegex": [
-    "tw`([^`]*)",
-    "tw=\"([^\"]*)",
-    "tw={\"([^\"}]*)",
-    "tw\\.\\w+`([^`]*)",
-    "classnames\\(([^)]*)\\)",
-    "clsx\\(([^)]*)\\)"
-  ],
+
+  // ⚠️ Remove experimental regex unless needed — it causes breakage
+  // "tailwindCSS.experimental.classRegex": [
+  //   "tw`([^`]*)`",
+  //   "classnames\\(([^)]*)\\)",
+  //   "clsx\\(([^)]*)\\)"
+  // ],
 
   // === CSS ===
   "css.validate": true,
   "css.lint.unknownAtRules": "ignore",
 
-  // === Emmet (coc-emmet) ===
+  // === Emmet ===
   "emmet.includeLanguages": {
     "javascript": "javascriptreact",
     "typescript": "typescriptreact",
@@ -48,11 +58,8 @@
     "typescriptreact": "html"
   },
 
-  // === Completion behavior ===
-  "suggest.noselect": false,
-  "suggest.enablePreselect": true,
-
-  // === Format on save ===
+  // === Auto-formatting ===
+  // Prettier formats the file, ESLint fixes rules — stable combo
   "coc.preferences.formatOnSaveFiletypes": [
     "javascript",
     "javascriptreact",
@@ -64,19 +71,14 @@
     "html"
   ],
 
-  // VSCode-style trigger for ESLint fixAll — coc-eslint respects this
-  "editor.codeActionsOnSave": {
-    "source.fixAll.eslint": true
-  },
+  // === Suggestions ===
+  "suggest.noselect": false,
+  "suggest.enablePreselect": true,
 
-  // === Jumps ===
+  // === Jump behavior ===
   "coc.preferences.jumpCommand": "tab drop",
 
-  // === Yarn PnP SDKs ===
-  "tsserver.tsdk": ".yarn/sdks/typescript/lib",
-  "eslint.nodePath": ".yarn/sdks",
-
-  // === Prisma (coc-prisma) ===
+  // === Prisma ===
   "prisma.enable": true,
   "prisma.enableSyntaxHighlighting": true,
   "prisma.schemaFile": "schema.prisma"
