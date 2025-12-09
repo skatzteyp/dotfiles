@@ -1,8 +1,8 @@
 {
   // === ESLint ===
   "eslint.enable": true,
-  "eslint.run": "onSave",
-  "eslint.autoFixOnSave": false, // avoid conflicts with Prettier
+  "eslint.run": "onSave", // just lint on save
+  "eslint.autoFixOnSave": false, // DO NOT auto-fix on save
   "eslint.filetypes": [
     "javascript",
     "javascriptreact",
@@ -13,21 +13,20 @@
     "extensions": [".js", ".jsx", ".ts", ".tsx"]
   },
 
-  // === Code Actions on Save ===
-  // Let ESLint fix on save, but avoid double-formatting
-  "editor.codeActionsOnSave": {
-    "source.fixAll.eslint": true
-  },
+  // ❌ IMPORTANT: Disable fixAll on save
+  // This is what was causing ESLint to also mutate the buffer
+  "editor.codeActionsOnSave": {},
 
-  // === Prettier ===
-  // Prettier formats; ESLint fixes rules — no double conflict
+  // === Prettier (single source of formatting truth) ===
   "prettier.enable": true,
   "prettier.requireConfig": false,
   "prettier.disableLanguages": ["vue"],
 
-  // === TypeScript ===
+  // === TypeScript / TS Server ===
   "tsserver.enable": true,
   "typescript.preferences.importModuleSpecifier": "non-relative",
+
+  // Yarn PnP SDKs
   "tsserver.tsdk": ".yarn/sdks/typescript/lib",
   "eslint.nodePath": ".yarn/sdks",
 
@@ -39,7 +38,7 @@
     "typescriptreact": "typescriptreact"
   },
 
-  // ⚠️ Remove experimental regex unless needed — it causes breakage
+  // ⚠ Leave this off for now; it only affects IntelliSense, not needed
   // "tailwindCSS.experimental.classRegex": [
   //   "tw`([^`]*)`",
   //   "classnames\\(([^)]*)\\)",
@@ -58,8 +57,7 @@
     "typescriptreact": "html"
   },
 
-  // === Auto-formatting ===
-  // Prettier formats the file, ESLint fixes rules — stable combo
+  // === Format on save (Prettier only) ===
   "coc.preferences.formatOnSaveFiletypes": [
     "javascript",
     "javascriptreact",
@@ -71,14 +69,14 @@
     "html"
   ],
 
-  // === Suggestions ===
+  // === Completion behavior ===
   "suggest.noselect": false,
   "suggest.enablePreselect": true,
 
-  // === Jump behavior ===
+  // === Jumps ===
   "coc.preferences.jumpCommand": "tab drop",
 
-  // === Prisma ===
+  // === Prisma (coc-prisma) ===
   "prisma.enable": true,
   "prisma.enableSyntaxHighlighting": true,
   "prisma.schemaFile": "schema.prisma"
