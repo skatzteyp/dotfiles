@@ -33,5 +33,5 @@ return {
   { "tpope/vim-dispatch" },
 
   -- 🤖 AI Assistant
-  { "github/copilot.vim" },
+  { "github/copilot.vim" }
 }
