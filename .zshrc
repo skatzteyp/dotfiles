@@ -47,3 +47,11 @@ if [ -f "$HOME/.shrc" ]; then
   # shellcheck disable=SC1090
   . "$HOME/.shrc"
 fi
+
+# pnpm
+export PNPM_HOME="/Users/momon/Library/pnpm"
+case ":$PATH:" in
+  *":$PNPM_HOME:"*) ;;
+  *) export PATH="$PNPM_HOME:$PATH" ;;
+esac
+# pnpm end

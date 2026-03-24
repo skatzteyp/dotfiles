@@ -54,3 +54,18 @@ map("v", "<Tab>", ">gv", opts)
 
 -- === Transparent background (for nvim-transparent) ===
 vim.g.transparent_enabled = true
+
+-- === Auto-reload files changed on disk ===
+vim.opt.autoread = true
+
+vim.api.nvim_create_autocmd({ "FocusGained", "BufEnter", "CursorHold", "CursorHoldI" }, {
+  pattern = "*",
+  command = "checktime",
+})
+
+vim.api.nvim_create_autocmd("FileChangedShellPost", {
+  pattern = "*",
+  callback = function()
+    print("File changed on disk. Buffer reloaded.")
+  end,
+})
