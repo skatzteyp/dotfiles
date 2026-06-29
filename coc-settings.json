@@ -19,16 +19,12 @@
 
   // === Prettier (single source of formatting truth) ===
   "prettier.enable": true,
-  "prettier.requireConfig": false,
+  "prettier.requireConfig": true,
   "prettier.disableLanguages": ["vue"],
 
   // === TypeScript / TS Server ===
   "tsserver.enable": true,
   "typescript.preferences.importModuleSpecifier": "non-relative",
-
-  // Yarn PnP SDKs
-  "tsserver.tsdk": ".yarn/sdks/typescript/lib",
-  "eslint.nodePath": ".yarn/sdks",
 
   // === Tailwind CSS ===
   "tailwindCSS.includeLanguages": {

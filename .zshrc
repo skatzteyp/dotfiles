@@ -1,8 +1,3 @@
-# Set up the prompt
-autoload -Uz promptinit
-promptinit
-prompt adam1
-
 # We need to turn on shared history and ignoring dupes...
 setopt histignorealldups sharehistory
 
@@ -15,9 +10,13 @@ HISTFILE=~/.zsh_history
 bindkey "^[[A" history-beginning-search-backward
 bindkey "^[[B" history-beginning-search-forward
 
-# Use modern completion system
+# Use modern completion system; rebuild zcompdump at most once a day
 autoload -Uz compinit
-compinit
+if [[ -n ~/.zcompdump(#qN.mh+24) ]]; then
+  compinit
+else
+  compinit -C
+fi
 
 zstyle ':completion:*' auto-description 'specify: %d'
 zstyle ':completion:*' completer _expand _complete _correct _approximate
@@ -49,7 +48,7 @@ if [ -f "$HOME/.shrc" ]; then
 fi
 
 # pnpm
-export PNPM_HOME="/Users/momon/Library/pnpm"
+export PNPM_HOME="$HOME/Library/pnpm"
 case ":$PATH:" in
   *":$PNPM_HOME:"*) ;;
   *) export PATH="$PNPM_HOME:$PATH" ;;

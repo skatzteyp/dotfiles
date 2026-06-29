@@ -1,6 +1,3 @@
--- === Leader ===
-vim.g.mapleader = "\\"
-
 -- === Colors / Truecolor ===
 pcall(vim.cmd.colorscheme, "onedark")
 

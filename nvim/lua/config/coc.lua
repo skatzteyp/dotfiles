@@ -34,7 +34,7 @@ local expr_opts = { silent = true, noremap = true, expr = true }
 -- === Tab completion ===
 vim.keymap.set("i", "<Tab>", function()
   if vim.fn["coc#pum#visible"]() == 1 then
-    return vim.fn
+    return vim.fn["coc#pum#next"](1)
   elseif check_backspace() then
     return "\t"
   else
@@ -45,7 +45,7 @@ end, vim.tbl_extend("force", expr_opts, { replace_keycodes = false }))
 
 vim.keymap.set("i", "<S-Tab>", function()
   if vim.fn["coc#pum#visible"]() == 1 then
-    return vim.fn
+    return vim.fn["coc#pum#prev"](1)
   else
     return vim.api.nvim_replace_termcodes("<C-h>", true, false, true)
   end
@@ -128,7 +128,7 @@ if vim.fn.has("nvim-0.4.0") == 1 or vim.fn.has("patch-8.2.0750") == 1 then
 
   vim.keymap.set("n", "<C-f>", function()
     if vim.fn["coc#float#has_scroll"]() == 1 then
-      return vim.fn
+      return vim.fn["coc#float#scroll"](1)
     else
       return vim.api.nvim_replace_termcodes("<C-f>", true, false, true)
     end
@@ -136,7 +136,7 @@ if vim.fn.has("nvim-0.4.0") == 1 or vim.fn.has("patch-8.2.0750") == 1 then
 
   vim.keymap.set("n", "<C-b>", function()
     if vim.fn["coc#float#has_scroll"]() == 1 then
-      return vim.fn
+      return vim.fn["coc#float#scroll"](0)
     else
       return vim.api.nvim_replace_termcodes("<C-b>", true, false, true)
     end
@@ -144,7 +144,7 @@ if vim.fn.has("nvim-0.4.0") == 1 or vim.fn.has("patch-8.2.0750") == 1 then
 
   vim.keymap.set("x", "<C-f>", function()
     if vim.fn["coc#float#has_scroll"]() == 1 then
-      return vim.fn
+      return vim.fn["coc#float#scroll"](1)
     else
       return vim.api.nvim_replace_termcodes("<C-f>", true, false, true)
     end
@@ -152,7 +152,7 @@ if vim.fn.has("nvim-0.4.0") == 1 or vim.fn.has("patch-8.2.0750") == 1 then
 
   vim.keymap.set("x", "<C-b>", function()
     if vim.fn["coc#float#has_scroll"]() == 1 then
-      return vim.fn
+      return vim.fn["coc#float#scroll"](0)
     else
       return vim.api.nvim_replace_termcodes("<C-b>", true, false, true)
     end

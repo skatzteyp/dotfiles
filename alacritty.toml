@@ -35,6 +35,8 @@ y = 10
 background = "#000000"
 foreground = "#e3e5e8"
 
+# Alacritty does not expand env vars (e.g. $SHELL) in `program`.
+# If you switch to a brew-installed zsh, set this to /opt/homebrew/bin/zsh.
 [terminal.shell]
 program = "/bin/zsh"
 args = ["-l", "-c", "tmux attach || tmux"]

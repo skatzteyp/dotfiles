@@ -64,7 +64,7 @@ if [ -t 0 ]; then
   read -r NEW_EMAIL || true
   [ -n "${NEW_EMAIL:-}" ] && git config --global user.email "$NEW_EMAIL"
 
-  printf "Update/Install plugins? [Y/n]: "
+  printf "Sync plugins to spec (installs/updates and removes any not declared)? [Y/n]: "
   read -r UPDATE_PLUGINS || UPDATE_PLUGINS="Y"
 else
   UPDATE_PLUGINS="Y"
@@ -99,7 +99,7 @@ if $IS_MAC; then
     /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
   fi
   echo "📦 Ensuring neovim, tmux, git, curl, unzip..."
-  brew install neovim tmux reattach-to-user-namespace git curl unzip >/dev/null 2>&1 || true
+  brew install neovim tmux reattach-to-user-namespace git curl unzip
 
 elif $IS_LINUX; then
   echo "🐧 Ensuring neovim, tmux, git, curl, unzip..."
@@ -116,6 +116,7 @@ fi
 ########################################
 
 DOTFILES_DIR="$HOME/Projects/dotfiles"
+DOTFILES_REPO="${DOTFILES_REPO:-https://github.com/skatzteyp/dotfiles.git}"
 XDG_CONFIG_HOME="${XDG_CONFIG_HOME:-$HOME/.config}"
 NVIM_CONFIG_DIR="$XDG_CONFIG_HOME/nvim"
 ALACRITTY_CONFIG_DIR="$XDG_CONFIG_HOME/alacritty"
@@ -129,7 +130,7 @@ mkdir -p "$XDG_CONFIG_HOME"
 
 if [ ! -d "$DOTFILES_DIR/.git" ]; then
   mkdir -p "$(dirname "$DOTFILES_DIR")"
-  git clone https://github.com/skatzteyp/dotfiles.git "$DOTFILES_DIR"
+  git clone "$DOTFILES_REPO" "$DOTFILES_DIR"
 else
   cd "$DOTFILES_DIR"
   git pull --ff-only
@@ -138,32 +139,32 @@ fi
 cd "$DOTFILES_DIR"
 
 ########################################
-# vim-plug
+# Symlinks (shell, tmux)
 ########################################
 
-if [ ! -f "$HOME/.vim/autoload/plug.vim" ]; then
-  echo "📥 Installing vim-plug..."
-  curl -fLo "$HOME/.vim/autoload/plug.vim" --create-dirs \
-    https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+link_file "$DOTFILES_DIR/.bash_profile" "$HOME/.bash_profile"
+link_file "$DOTFILES_DIR/.bashrc"       "$HOME/.bashrc"
+link_file "$DOTFILES_DIR/.zsh_profile"  "$HOME/.zsh_profile"
+link_file "$DOTFILES_DIR/.zshrc"        "$HOME/.zshrc"
+link_file "$DOTFILES_DIR/.shrc"         "$HOME/.shrc"
+link_file "$DOTFILES_DIR/.tmux.conf"    "$HOME/.tmux.conf"
+
+########################################
+# Neovim (Lua-based)
+########################################
+# Expecting:
+#   $DOTFILES_DIR/nvim/init.lua
+#   $DOTFILES_DIR/nvim/lua/config/*.lua
+
+mkdir -p "$NVIM_CONFIG_DIR"
+
+if [ -f "$DOTFILES_DIR/nvim/init.lua" ]; then
+  link_file "$DOTFILES_DIR/nvim/init.lua" "$NVIM_CONFIG_DIR/init.lua"
 fi
 
-mkdir -p "$HOME/.vim"
-
-########################################
-# Symlinks (shell, vim, tmux)
-########################################
-
-link_file "$DOTFILES_DIR/.vimrc"           "$HOME/.vimrc"
-link_file "$DOTFILES_DIR/.vimrc.d"         "$HOME/.vimrc.d"
-link_file "$HOME/.vim"                     "$NVIM_CONFIG_DIR"
-link_file "$HOME/.vimrc"                   "$NVIM_CONFIG_DIR/init.vim"
-
-link_file "$DOTFILES_DIR/.bash_profile"    "$HOME/.bash_profile"
-link_file "$DOTFILES_DIR/.bashrc"          "$HOME/.bashrc"
-link_file "$DOTFILES_DIR/.zsh_profile"     "$HOME/.zsh_profile"
-link_file "$DOTFILES_DIR/.zshrc"           "$HOME/.zshrc"
-link_file "$DOTFILES_DIR/.shrc"            "$HOME/.shrc"
-link_file "$DOTFILES_DIR/.tmux.conf"       "$HOME/.tmux.conf"
+if [ -d "$DOTFILES_DIR/nvim/lua" ]; then
+  link_file "$DOTFILES_DIR/nvim/lua" "$NVIM_CONFIG_DIR/lua"
+fi
 
 ########################################
 # zsh-autosuggestions
@@ -249,7 +250,7 @@ if have_cmd npm; then
 fi
 
 ########################################
-# CoC settings
+# CoC settings (still valid with Neovim)
 ########################################
 
 if [ -f "$DOTFILES_DIR/coc-settings.json" ]; then
@@ -258,24 +259,29 @@ if [ -f "$DOTFILES_DIR/coc-settings.json" ]; then
 fi
 
 ########################################
-# Plugins (vim-plug)
+# Plugins (lazy.nvim via Neovim)
 ########################################
 
-if [ "${UPDATE_PLUGINS:-Y}" != "n" ] && ( have_cmd nvim || have_cmd vim ); then
-  echo "🔄 Installing / updating plugins (headless)..."
-  headless_vim +PlugUpgrade +PlugClean! +PlugUpdate +qall || true
+if [ "${UPDATE_PLUGINS:-Y}" != "n" ] && have_cmd nvim; then
+  echo "🔄 Installing / updating Neovim plugins (lazy.nvim)..."
+  # init.lua bootstraps lazy.nvim; this will sync everything
+  nvim --headless "+Lazy! sync" +qa || true
 fi
 
 ########################################
 # Promptline / Tmuxline snapshots
 ########################################
 
-if [ -d "$HOME/.vim/plugged/promptline.vim" ]; then
-  headless_vim +"PromptlineSnapshot! ~/.promptline.sh" +qall || true
-fi
+DATA_DIR="$(nvim --headless '+echo stdpath("data")' +qa 2>/dev/null || echo "")"
 
-if [ -d "$HOME/.vim/plugged/tmuxline.vim" ]; then
-  headless_vim +Tmuxline +"TmuxlineSnapshot! ~/.tmuxline.conf" +qall || true
+if [ -n "$DATA_DIR" ]; then
+  if [ -d "$DATA_DIR/lazy/promptline.vim" ]; then
+    headless_vim +"PromptlineSnapshot! ~/.promptline.sh" +qall || true
+  fi
+
+  if [ -d "$DATA_DIR/lazy/tmuxline.vim" ]; then
+    headless_vim +Tmuxline +"TmuxlineSnapshot! ~/.tmuxline.conf" +qall || true
+  fi
 fi
 
 ########################################
@@ -284,7 +290,7 @@ fi
 
 echo
 echo "🎉 Setup complete!"
-echo "   - Shell, tmux, Neovim configured"
+echo "   - Neovim (Lua), shell, tmux configured"
 echo "   - Node: $(node -v 2>/dev/null || echo 'not detected')"
 echo "   - Yarn: $(yarn -v 2>/dev/null || echo 'not detected')"
 echo "   - pnpm: $(pnpm -v 2>/dev/null || echo 'not detected')"
