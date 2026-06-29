@@ -39,7 +39,7 @@ foreground = "#e3e5e8"
 # If you switch to a brew-installed zsh, set this to /opt/homebrew/bin/zsh.
 [terminal.shell]
 program = "/bin/zsh"
-args = ["-l", "-c", "tmux attach || tmux"]
+args = ["-l", "-c", "tmux attach || tmux new-session || exec /bin/zsh -il"]
 
 [keyboard]
 bindings = [
