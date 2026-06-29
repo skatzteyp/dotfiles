@@ -38,14 +38,6 @@ link_file() {
 
 have_cmd() { command -v "$1" >/dev/null 2>&1; }
 
-headless_vim() {
-  if have_cmd nvim; then
-    nvim --headless "$@"
-  elif have_cmd vim; then
-    vim "$@"
-  fi
-}
-
 ########################################
 # Git config
 ########################################
@@ -148,6 +140,15 @@ link_file "$DOTFILES_DIR/.zsh_profile"  "$HOME/.zsh_profile"
 link_file "$DOTFILES_DIR/.zshrc"        "$HOME/.zshrc"
 link_file "$DOTFILES_DIR/.shrc"         "$HOME/.shrc"
 link_file "$DOTFILES_DIR/.tmux.conf"    "$HOME/.tmux.conf"
+
+# Versioned promptline/tmuxline snapshots (statusbar + shell prompt colors).
+# Kept in the repo rather than regenerated per machine: tmuxline's snapshot
+# command only runs inside a live tmux session, so headless generation during
+# install is unreliable. To refresh after a theme change, run inside tmux:
+#   :PromptlineSnapshot! ~/Projects/dotfiles/.promptline.sh
+#   :TmuxlineSnapshot!   ~/Projects/dotfiles/.tmuxline.conf
+link_file "$DOTFILES_DIR/.promptline.sh" "$HOME/.promptline.sh"
+link_file "$DOTFILES_DIR/.tmuxline.conf" "$HOME/.tmuxline.conf"
 
 ########################################
 # Neovim (Lua-based)
@@ -266,22 +267,6 @@ if [ "${UPDATE_PLUGINS:-Y}" != "n" ] && have_cmd nvim; then
   echo "🔄 Installing / updating Neovim plugins (lazy.nvim)..."
   # init.lua bootstraps lazy.nvim; this will sync everything
   nvim --headless "+Lazy! sync" +qa || true
-fi
-
-########################################
-# Promptline / Tmuxline snapshots
-########################################
-
-DATA_DIR="$(nvim --headless '+echo stdpath("data")' +qa 2>/dev/null || echo "")"
-
-if [ -n "$DATA_DIR" ]; then
-  if [ -d "$DATA_DIR/lazy/promptline.vim" ]; then
-    headless_vim +"PromptlineSnapshot! ~/.promptline.sh" +qall || true
-  fi
-
-  if [ -d "$DATA_DIR/lazy/tmuxline.vim" ]; then
-    headless_vim +Tmuxline +"TmuxlineSnapshot! ~/.tmuxline.conf" +qall || true
-  fi
 fi
 
 ########################################
