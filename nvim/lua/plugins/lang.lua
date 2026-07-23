@@ -8,8 +8,14 @@ return {
   { "styled-components/vim-styled-components", branch = "main" },
   { "cakebaker/scss-syntax.vim" },
 
-  -- PHP / WordPress
+  -- PHP / Laravel / WordPress
   { "StanAngeloff/php.vim" },
+
+  -- Laravel: :Artisan / :Composer commands + projection navigation
+  -- (runs async through tpope/vim-dispatch, already in plugins.core)
+  { "tpope/vim-projectionist" },
+  { "noahfrederick/vim-composer" },
+  { "noahfrederick/vim-laravel" },
 
   -- Vue
   { "posva/vim-vue" },
